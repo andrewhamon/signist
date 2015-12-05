@@ -69,5 +69,6 @@ func apiUrl() *url.URL {
 func postToApi(login string, title string, payload []byte) (*http.Response, error) {
 	destUrl := apiUrl()
 	destUrl.Path = path.Join(login)
+
 	return http.Post(destUrl.String(), "application/json", bytes.NewReader(payload))
 }
