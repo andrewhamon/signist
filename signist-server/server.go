@@ -11,6 +11,7 @@ import (
 	"github.com/martini-contrib/render"
 	"log"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -21,8 +22,17 @@ type jsonError struct {
 	Error string
 }
 
+func databaseString() string {
+	dbstr := os.Getenv("DATABASE_URL")
+	if len(dbstr) > 0 {
+		return dbstr
+	}
+
+	return "user=signist dbname=signist sslmode=disable"
+}
+
 func main() {
-	db, err := sqlx.Connect("postgres", "user=signist dbname=signist sslmode=disable")
+	db, err := sqlx.Connect("postgres", databaseString())
 	if err != nil {
 		log.Fatalln(err)
 	}
