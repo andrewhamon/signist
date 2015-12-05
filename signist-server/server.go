@@ -64,7 +64,7 @@ func main() {
 		}
 
 		for _, m := range messages {
-			m := m
+			m.GithubLogin = user.Login
 
 			m.Signatures = []*models.Signature{}
 			err := db.Select(&m.Signatures, "SELECT * FROM signatures WHERE message_id = $1", m.ID)
