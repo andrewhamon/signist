@@ -40,6 +40,12 @@ func main() {
 	m := martini.Classic()
 	m.Use(render.Renderer())
 
+	m.Use(func(req *http.Request, r render.Render) {
+		if req.ContentLength > (1 << 20) {
+			r.JSON(http.StatusRequestEntityTooLarge, jsonError{Error: "Body can not be greater than 1MB"})
+		}
+	})
+
 	m.Get("/:login", func(params martini.Params, r render.Render) {
 		user, err := github.UserFor(params["login"])
 		if err != nil {
