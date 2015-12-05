@@ -2,9 +2,9 @@ package models
 
 import (
 	"encoding/base64"
+	"github.com/andrewhamon/signist/Godeps/_workspace/src/github.com/martini-contrib/binding"
+	"github.com/andrewhamon/signist/Godeps/_workspace/src/golang.org/x/crypto/ssh"
 	"github.com/andrewhamon/signist/github"
-	"github.com/martini-contrib/binding"
-	"golang.org/x/crypto/ssh"
 	"net/http"
 	"regexp"
 	"time"

@@ -3,7 +3,7 @@ package models
 import (
 	"encoding/base64"
 	"errors"
-	"golang.org/x/crypto/ssh"
+	"github.com/andrewhamon/signist/Godeps/_workspace/src/golang.org/x/crypto/ssh"
 )
 
 type PublicKey struct {

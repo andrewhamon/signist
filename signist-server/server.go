@@ -1,14 +1,14 @@
 package main
 
 import (
+	"github.com/andrewhamon/signist/Godeps/_workspace/src/github.com/go-martini/martini"
+	"github.com/andrewhamon/signist/Godeps/_workspace/src/github.com/jmoiron/sqlx"
+	_ "github.com/andrewhamon/signist/Godeps/_workspace/src/github.com/lib/pq"
+	"github.com/andrewhamon/signist/Godeps/_workspace/src/github.com/martini-contrib/binding"
+	"github.com/andrewhamon/signist/Godeps/_workspace/src/github.com/martini-contrib/render"
 	"github.com/andrewhamon/signist/github"
 	"github.com/andrewhamon/signist/models"
 	"github.com/andrewhamon/signist/utils"
-	"github.com/go-martini/martini"
-	"github.com/jmoiron/sqlx"
-	_ "github.com/lib/pq"
-	"github.com/martini-contrib/binding"
-	"github.com/martini-contrib/render"
 	"log"
 	"net/http"
 	"os"

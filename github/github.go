@@ -1,8 +1,8 @@
 package github
 
 import (
-	"github.com/google/go-github/github"
-	"golang.org/x/crypto/ssh"
+	"github.com/andrewhamon/signist/Godeps/_workspace/src/github.com/google/go-github/github"
+	"github.com/andrewhamon/signist/Godeps/_workspace/src/golang.org/x/crypto/ssh"
 	"log"
 )
 

@@ -3,10 +3,10 @@ package utils
 import (
 	"bytes"
 	"encoding/base64"
+	"github.com/andrewhamon/signist/Godeps/_workspace/src/golang.org/x/crypto/ssh"
+	"github.com/andrewhamon/signist/Godeps/_workspace/src/golang.org/x/crypto/ssh/agent"
 	"github.com/andrewhamon/signist/github"
 	"github.com/andrewhamon/signist/models"
-	"golang.org/x/crypto/ssh"
-	"golang.org/x/crypto/ssh/agent"
 	"log"
 	"net"
 	"os"
