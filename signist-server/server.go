@@ -6,7 +6,6 @@ import (
 	_ "github.com/andrewhamon/signist/Godeps/_workspace/src/github.com/lib/pq"
 	"github.com/andrewhamon/signist/Godeps/_workspace/src/github.com/martini-contrib/binding"
 	"github.com/andrewhamon/signist/Godeps/_workspace/src/github.com/martini-contrib/render"
-	"github.com/andrewhamon/signist/github"
 	"github.com/andrewhamon/signist/models"
 	"github.com/andrewhamon/signist/utils"
 	"log"
@@ -46,16 +45,10 @@ func main() {
 		}
 	})
 
-	m.Get("/:login", func(params martini.Params, r render.Render) {
-		user, err := github.UserFor(params["login"])
-		if err != nil {
-			r.JSON(http.StatusNotFound, jsonError{Error: "That github user could not be found"})
-			return
-		}
-
+	m.Get("/:github_id", func(params martini.Params, r render.Render) {
 		messages := []*models.Message{}
 
-		err = db.Select(&messages, "SELECT * FROM messages WHERE github_id = $1", user.ID)
+		err := db.Select(&messages, "SELECT * FROM messages WHERE github_id = $1", params["github_id"])
 
 		if err != nil {
 			log.Println(err)
@@ -64,8 +57,6 @@ func main() {
 		}
 
 		for _, m := range messages {
-			m.GithubLogin = user.Login
-
 			m.Signatures = []*models.Signature{}
 			err := db.Select(&m.Signatures, "SELECT * FROM signatures WHERE message_id = $1", m.ID)
 			if err != nil {
@@ -77,13 +68,7 @@ func main() {
 		r.JSON(http.StatusOK, messages)
 	})
 
-	m.Post("/:login", binding.Bind(models.Message{}), func(message models.Message, params martini.Params, r render.Render) {
-		user := params["login"]
-		if user != *message.GithubLogin {
-			r.JSON(http.StatusBadRequest, jsonError{Error: "Login in payload doesn't match login in URL"})
-			return
-		}
-
+	m.Post("/", binding.Bind(models.Message{}), func(message models.Message, params martini.Params, r render.Render) {
 		tx := db.MustBegin()
 		err := tx.QueryRowx(`INSERT INTO messages (github_id, title, blob, created_at) VALUES ($1, $2, $3, $4) RETURNING id, created_at`, message.GithubID, message.Title, message.Blob, time.Now()).StructScan(&message)
 

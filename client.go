@@ -12,7 +12,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"path"
 	"time"
 )
 
@@ -36,6 +35,8 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	println(string(payload))
 
 	res, err := postToApi(*name, *title, payload)
 
@@ -68,7 +69,5 @@ func apiUrl() *url.URL {
 
 func postToApi(login string, title string, payload []byte) (*http.Response, error) {
 	destUrl := apiUrl()
-	destUrl.Path = path.Join(login)
-
 	return http.Post(destUrl.String(), "application/json", bytes.NewReader(payload))
 }
